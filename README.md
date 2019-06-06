@@ -1,8 +1,19 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Proposal
 
-To start the project, use `npm start`
+While a proposal is made by one of two people, the other must accept within a time period or the proposal will be rejected by timeout.
+
+This is an illustration to learn Higher order components (HOC) & Promises.
+
+To start the project, use `npm start`. Bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Components
+
+**Current status**: Writing different Mystery components as milestones to reach the end goal.
+
+**End goal**: Mystery component returns a promise.
+The promise resolves by button-click, else it will timeout in 3 seconds and return an error.
+
+The Mystery component will be wrapped withLoader, and withLoader modifies Mystery component to show a loader while awaiting promise to resolve.
 
 ### Mystery
 
