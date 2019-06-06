@@ -2,10 +2,97 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 To start the project, use `npm start`
 
+## Components
+
+### Mystery
+
+```Javascript
+import React from "react";
+
+class Mystery extends React.Component {
+  render() {
+    return <div>A Mystery</div>;
+  }
+}
+
+export default Mystery;
+```
+
+### WrappedMystery
+
+```Javascript
+import React from "react";
+import loadingWrapper from "./LoadingWrapper";
+
+class WrappedMystery extends React.Component {
+  render() {
+    let { type } = this.props;
+    return <div>{type} Mystery</div>;
+  }
+}
+
+export default loadingWrapper(WrappedMystery);
+```
+
+### LoadingWrapper
+
+```Javascript
+import React from "react";
+
+// put the Original Component into a New Component
+const loadingWrapper = OriginalComponent => {
+  class NewComponent extends React.Component {
+    render() {
+      return <OriginalComponent type="Wrapped" />;
+    }
+  }
+  return NewComponent;
+};
+
+export default loadingWrapper;
+```
+
+### AsyncMystery
+
+```Javascript
+import React from "react";
+
+class AsyncMystery extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: "Loading..."
+    };
+  }
+  componentWillMount() {
+    var promise = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve("Success");
+      }, 2000);
+    });
+    promise.then(
+      result => {
+        this.setState({ data: result });
+      },
+      function(error) {
+        this.setState({ data: error });
+      }
+    );
+  }
+
+  render() {
+    let { data } = this.state;
+    return <div>Async Mystery: {data}</div>;
+  }
+}
+
+export default AsyncMystery;
+```
+
 ## Progress
 
 - [x] Wrap Mystery
-- [ ] Async Mystery
+- [x] Async Mystery
 - [ ] Wrap Async Mystery
 - [ ] Mystery to return Promise
 

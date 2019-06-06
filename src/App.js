@@ -1,6 +1,7 @@
 import React from "react";
 import Mystery from "./components/Mystery";
 import WrappedMystery from "./components/WrappedMystery";
+import AsyncMystery from "./components/AsyncMystery";
 import "./App.css";
 
 function App() {
@@ -8,6 +9,7 @@ function App() {
     <div className="App">
       <Mystery />
       <WrappedMystery />
+      <AsyncMystery />
     </div>
   );
 }
