@@ -4,7 +4,7 @@ import React from "react";
 const loadingWrapper = OriginalComponent => {
   class NewComponent extends React.Component {
     render() {
-      return <OriginalComponent />;
+      return <OriginalComponent type="Wrapped" />;
     }
   }
   return NewComponent;

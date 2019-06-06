@@ -1,10 +1,12 @@
 import React from "react";
-import loadingWrapper from "./LoadingWrapper";
 
 class Mystery extends React.Component {
   render() {
-    return <div>A mystery</div>;
+    setTimeout(() => {
+      console.log("Async hello");
+    }, 2000);
+    return <div>A Mystery</div>;
   }
 }
 
-export default loadingWrapper(Mystery);
+export default Mystery;
