@@ -1,6 +1,7 @@
 import React from "react";
 
-const LoadingWrapper = OriginalComponent => {
+// put the Original Component into a New Component
+const loadingWrapper = OriginalComponent => {
   class NewComponent extends React.Component {
     render() {
       return <OriginalComponent />;
@@ -9,4 +10,4 @@ const LoadingWrapper = OriginalComponent => {
   return NewComponent;
 };
 
-export default LoadingWrapper;
+export default loadingWrapper;
