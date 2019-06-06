@@ -1,7 +1,5 @@
 # Proposal
 
-While a proposal is made by one of two people, the other must accept within a time period or the proposal will be rejected by timeout.
-
 This is an illustration to learn Higher order components (HOC) & Promises.
 
 To start the project, use `npm start`. Bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
@@ -10,51 +8,82 @@ To start the project, use `npm start`. Bootstrapped with [Create React App](http
 
 **Current status**: Writing different Mystery components as milestones to reach the end goal.
 
-**End goal**: Mystery component returns a promise.
-The promise resolves by button-click, else it will timeout in 3 seconds and return an error.
-
-The Mystery component will be wrapped withLoader, and withLoader modifies Mystery component to show a loader while awaiting promise to resolve.
+**End goal**: Mystery is a UI component that is wrapped with HOC. API call and UI component is passed into HOC together.
 
 ### Mystery
+
+UI component.
 
 ```Javascript
 import React from "react";
 
 class Mystery extends React.Component {
   render() {
-    return <div>A Mystery</div>;
+    return <div>Mystery</div>;
   }
 }
 
 export default Mystery;
 ```
 
-### WrappedMystery
+### SimpleWrapper
+
+Simple wrapper has one parameter: UI component.
+It wraps the UI component with 'Wrapped' text.
 
 ```Javascript
-import React from "react";
-import loadingWrapper from "./LoadingWrapper";
+import React, { Fragment } from "react";
 
-class WrappedMystery extends React.Component {
-  render() {
-    let { type } = this.props;
-    return <div>{type} Mystery</div>;
+// put the Original Component into a New Component
+const simpleWrapper = OriginalComponent => {
+  class NewComponent extends React.Component {
+    render() {
+      return (
+        <Fragment>
+          <div>Wrapped </div>
+          <OriginalComponent {...this.props} />
+        </Fragment>
+      );
+    }
   }
-}
+  return NewComponent;
+};
 
-export default loadingWrapper(WrappedMystery);
+export default simpleWrapper;
 ```
 
 ### LoadingWrapper
+
+Loading wrapper requires two parameters. The first is a function, second is a UI component.
+After the function resolves, it takes the result and passes it to the UI component.
 
 ```Javascript
 import React from "react";
 
 // put the Original Component into a New Component
-const loadingWrapper = OriginalComponent => {
+const loadingWrapper = (loader, OriginalComponent) => {
   class NewComponent extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        loading: true,
+        data: null
+      };
+    }
+
+    async componentDidMount() {
+      try {
+        const data = await loader();
+        this.setState({ loading: false, data });
+      } catch (err) {
+        console.log(err);
+        this.setState({ loading: false, data: "Error" });
+      }
+    }
+
     render() {
-      return <OriginalComponent type="Wrapped" />;
+      if (this.state.loading) return <div>Loading</div>;
+      return <OriginalComponent data={this.state.data} {...this.props} />;
     }
   }
   return NewComponent;
@@ -65,6 +94,8 @@ export default loadingWrapper;
 
 ### AsyncMystery
 
+UI component which makes an API call through componentWillMount(), which will update _data_ in state when resolved.
+
 ```Javascript
 import React from "react";
 
@@ -72,7 +103,7 @@ class AsyncMystery extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: "Loading..."
+      data: ""
     };
   }
   componentWillMount() {
@@ -100,12 +131,37 @@ class AsyncMystery extends React.Component {
 export default AsyncMystery;
 ```
 
+### MysteryWithPromise
+
+UI component.
+The wrapper used here requires two parameters. The loaderAPI and this UI component.
+
+```Javascript
+import React from "react";
+import loadingWrapper from "./LoadingWrapper";
+
+class MysteryWithPromise extends React.Component {
+  render() {
+    let { data } = this.props;
+    return <div>Mystery with Promise: {data}</div>;
+  }
+}
+
+let loaderAPI = () =>
+  new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve("Success");
+    }, 4000);
+  });
+
+export default loadingWrapper(loaderAPI, MysteryWithPromise);
+```
+
 ## Progress
 
 - [x] Wrap Mystery
 - [x] Async Mystery
-- [ ] Wrap Async Mystery
-- [ ] Mystery to return Promise
+- [x] Mystery with Promise/API call
 
 ### HOC
 

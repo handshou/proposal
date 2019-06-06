@@ -2,6 +2,7 @@ import React from "react";
 import Mystery from "./components/Mystery";
 import WrappedMystery from "./components/WrappedMystery";
 import AsyncMystery from "./components/AsyncMystery";
+import MysteryWithPromise from "./components/MysteryWithPromise";
 import "./App.css";
 
 function App() {
@@ -10,6 +11,7 @@ function App() {
       <Mystery />
       <WrappedMystery />
       <AsyncMystery />
+      <MysteryWithPromise />
     </div>
   );
 }

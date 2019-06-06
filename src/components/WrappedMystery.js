@@ -1,11 +1,10 @@
 import React from "react";
-import loadingWrapper from "./LoadingWrapper";
+import simpleWrapper from "./SimpleWrapper";
 
 class WrappedMystery extends React.Component {
   render() {
-    let { type } = this.props;
-    return <div>{type} Mystery</div>;
+    return <div>Mystery</div>;
   }
 }
 
-export default loadingWrapper(WrappedMystery);
+export default simpleWrapper(WrappedMystery);
