@@ -1,4 +1,5 @@
 import React from "react";
+import loadingWrapper from "./LoadingWrapper";
 
 class Mystery extends React.Component {
   render() {
@@ -6,4 +7,4 @@ class Mystery extends React.Component {
   }
 }
 
-export default Mystery;
+export default loadingWrapper(Mystery);
